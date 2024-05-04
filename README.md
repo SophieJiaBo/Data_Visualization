@@ -1,4 +1,5 @@
-# Linear-Regression-Analysis
+# Data Visualization
+# Dataset
 Based on a dataset from the Kaggle website (https://www.kaggle.com/datasets/asaniczka/52000-animation-movie-details-dataset-2024), this project aims to investigate the correlation between the animation's popularity and revenue and the correlation between run time and revenue by using linear regression models. 
 The dataset from the Kaggle website (https://www.kaggle.com/datasets/asaniczka/52000-animation-movie-details-dataset-2024), uploaded by ASANICZKA, has data about animation movies, which is scraped from the TMDB API. This dataset examines animation movies' performances in different aspects, including revenue, runtime, etc. It includes 23 variables, such as id, title, vote_average, vote_count, status, release_date, revenue, etc, and 51945 observations.
 # Research Question
