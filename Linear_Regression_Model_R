@@ -1,0 +1,125 @@
+# Import Data
+```{r}
+library(tidyverse)# Load tidyverse
+library(ggplot2)# Load ggplot2
+ani_mov<-as.data.frame(read.csv("/Users/bojia/Desktop/data/Animation_Movies.csv")) #load data
+dim(ani_mov)#look at the dimensions of the dataset
+summary(ani_mov)
+```
+
+# Data Cleaning
+```{r}
+ani_mov <-ani_mov|>
+  select(popularity,revenue,runtime)|> #select the columns that'll be used
+  filter(popularity!= 0 & revenue!=0 &runtime!=0)#exclude missing data
+head(ani_mov)#show the result
+```
+
+# Visualization - Scatter Point plot
+
+```{r}
+#plot for correlation between popularity and revenue
+ani_mov |>
+ggplot(aes(x=popularity, y=revenue)) + #generate a ggplot
+  geom_point(color = "pink")+
+  geom_smooth(method = "lm", se = FALSE, color = "lightskyblue3")+ #add a trend line
+  labs(x = "Popularity",
+       y = "Revenue",
+       title = "Correlation between popularity and revenue",
+       subtitle='Lineplot')+ #label the x-axis, y-axis, title, and subtitle
+  theme_minimal() #minimal the theme to make it more readable
+```
+
+```{r}
+#plot for correlation between runtime and revenue
+ani_mov |>
+ggplot(aes(x=runtime, y=revenue)) + #generate a ggplot
+  geom_point(color = "plum2")+
+  geom_smooth(method = "lm", se = FALSE, color = "lightskyblue1")+ #add a trend line
+  labs(x = "Runtime",
+       y = "Revenue",
+       title = "Correlation between runtime and vote_average",
+       subtitle='lineplot')+#label the x-axis, y-axis, title, and subtitle
+  theme_minimal() #minimal the theme to make it more readable
+```
+
+#Visualization - Box Plot
+```{r}
+#plot for correlation between popularity and revenue
+
+popu_200<-ani_mov|>
+  filter(popularity>0&popularity<200)
+#if movie popularity is larger than 0 and smaller than 200, code it as "popu_200"
+
+popu_200_400<-ani_mov|>
+  filter(popularity>=200&popularity<400)
+#if movie popularity is larger/equal than 200 and smaller than 400, code it as "popu_200_400"
+
+popu_400_600<-ani_mov|>
+  filter(popularity>400&popularity<600)
+#if movie popularity is larger/equal than 400 and smaller than 600, code it as "popu_400_600"
+
+# Plot the first boxplot.
+boxplot1 <- ggplot(data = popu_200, aes(x = popularity,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour = "red", outlier.shape = 4, alpha = 0.5) + #add a boxplot with outliers shown
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Popularity", y = "Revenue", title = "Popularity0 to 200",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+
+boxplot2 <- ggplot(data = popu_200_400, aes(x = popularity,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour = "red", outlier.shape = 4, alpha = 0.5) + #add a boxplot with outliers shown
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Popularity", y = "Revenue", title = "Popularity200 to 400",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+
+boxplot3 <- ggplot(data = popu_400_600, aes(x = popularity,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour = "red", outlier.shape = 4, alpha = 0.5) + #add a boxplot with outliers shown
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Popularity", y = "Revenue", title = "Popularity400 to 800",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+
+```
+
+```{r}
+library(gridExtra) #upload gridExtra
+grid.arrange(boxplot1, boxplot2, boxplot3, ncol = 3) #show the boxplots in one page
+```
+
+```{r}
+#plot for correlation between runtime and revenue
+
+runtime_50_to_75<-ani_mov|>
+  filter(runtime>50&runtime<75)
+#if movie runtime is larger than 30 and smaller than 75, code it as "runtime_50_to_75"
+
+runtime_75_to_100<-ani_mov|>
+  filter(runtime>=75&runtime<100)
+#if movie runtime is larger/equal than 75 and smaller than 100, code it as "runtime_75_to_100"
+
+runtime_100_to_125<-ani_mov|>
+  filter(runtime>=100&runtime<125)
+#if movie runtime is larger/equal than 100 and smaller than 125, code it as "runtime_100_to_125"
+
+# Plot the first boxplot.
+boxplot1 <- ggplot(data = runtime_50_to_75, aes(x = runtime,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour ="red", outlier.shape = 4, alpha = 0.5) + #add a boxplot
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Runtime", y = "Revenue", title = "Runtime 50-75",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+
+boxplot2 <- ggplot(data = runtime_75_to_100, aes(x = runtime,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour ="red", outlier.shape = 4, alpha = 0.5) + #add a boxplot
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Runtime", y = "Revenue", title = "Runtime 75-100",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+
+boxplot3 <- ggplot(data = runtime_100_to_125, aes(x = runtime,y=revenue)) + #generate a ggplot
+  geom_boxplot(outlier.colour ="red", outlier.shape = 4, alpha = 0.5) + #add a boxplot
+  theme(title =element_text(size=10))+ #change the font
+  labs(x = "Runtime", y = "Revenue", title = "Runtime 100-125",
+       subtitle='Boxplot') #label the x-axies, y-axies, title, and subtitle
+```
+
+```{r}
+grid.arrange(boxplot1, boxplot2, boxplot3, ncol = 3) #show the boxplots in one page
+```
